@@ -27,3 +27,6 @@ hs_err_pid*
 /.idea/libraries
 /build
 /gradle
+/gradle.properties
+/convention-plugins/build
+/convention-plugins/.gradle
