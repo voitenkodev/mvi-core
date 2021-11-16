@@ -1,4 +1,7 @@
-plugins { kotlin("multiplatform") version "1.5.31" }
+plugins {
+    kotlin("multiplatform") version "1.5.31"
+    `maven-publish`
+}
 
 group = "com-voitenko-dev-mvi-core"
 version = "1.0-SNAPSHOT"
