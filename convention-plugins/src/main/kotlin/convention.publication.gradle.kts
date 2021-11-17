@@ -20,9 +20,7 @@ ext["ossrhPassword"] = null
 val secretPropsFile = project.rootProject.file("local.properties")
 if (secretPropsFile.exists()) {
     secretPropsFile.reader().use {
-        Properties().apply {
-            load(it)
-        }
+        Properties().apply { load(it) }
     }.onEach { (name, value) ->
         ext[name.toString()] = value
     }
@@ -61,9 +59,9 @@ publishing {
 
         // Provide artifacts information requited by Maven Central
         pom {
-            name.set("MPP Sample library")
-            description.set("Sample Kotlin Multiplatform library (jvm + ios + js) test")
-            url.set("https://github.com/KaterinaPetrova/mpp-sample-lib")
+            name.set("Mvi Core")
+            description.set("Multiplatform MVI CORE library (jvm + ios + js)")
+            url.set("https://github.com/voitenkodev/mvi-core")
 
             licenses {
                 license {
@@ -73,15 +71,13 @@ publishing {
             }
             developers {
                 developer {
-                    id.set("KaterinaPetrova")
-                    name.set("Ekaterina Petrova")
-                    email.set("91kathrin@gmail.com")
+                    id.set("MaxVoitenko")
+                    name.set("Max Voitenko")
+                    email.set("voitenko.dev@gmail.com")
                 }
             }
-            scm {
-                url.set("https://github.com/KaterinaPetrova/mpp-sample-lib")
-            }
 
+            scm { url.set("https://github.com/voitenkodev/mvi-core") }
         }
     }
 }
