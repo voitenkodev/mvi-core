@@ -3,7 +3,7 @@ plugins {
     id("convention.publication")
 }
 
-group = "com.voitenko.dev.mvi.core"
+group = "io.github.voitenkodev"
 version = "1.0"
 
 repositories {
