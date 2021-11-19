@@ -23,11 +23,12 @@
 hs_err_pid*
 
 
-/.idea/caches
 /.idea/libraries
 /build
 /gradle
-/gradle.properties
 /convention-plugins/build
 /convention-plugins/.gradle
+/private-key
+/.idea/caches
+/gradle.properties
 local.properties
