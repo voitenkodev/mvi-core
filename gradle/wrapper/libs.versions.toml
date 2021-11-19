@@ -1,0 +1,42 @@
+[versions]
+android-gradle-vers = "7.1.0-beta02"
+kotlin-vers = "1.5.31"
+coroutines-vers = "1.5.2"
+lifecycle-runtime-vers = "2.4.0-beta01"
+compose-vers = "1.0.4"
+compose-activity-vers = "1.4.0-rc01"
+compose-navigation-vers = "2.4.0-alpha10"
+compose-accompanist-vers = "0.20.0"
+compose-viewmodel-vers = "2.4.0-rc01"
+viewmodel-vers = "2.2.0"
+
+[libraries]
+kotlinx-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-vers" }
+kotlinx-kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin-vers" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines-vers" }
+kotlinx-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-vers" }
+
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewmodel-vers" }
+
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-vers" }
+compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-vers" }
+compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-vers" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-vers" }
+compose-material = { module = "androidx.compose.material:material", version.ref = "compose-vers" }
+compose-icons = { module = "androidx.compose.material:material-icons-core", version.ref = "compose-vers" }
+compose-icons-extensions = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose-vers" }
+compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity-vers" }
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation-vers" }
+compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewmodel-vers" }
+compose-accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "compose-accompanist-vers" }
+compose-accompanist-system = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "compose-accompanist-vers" }
+compose-accompanist-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "compose-accompanist-vers" }
+
+[plugins]
+
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-vers" }
+kotlin-native = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin-vers" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-vers" }
+
+android-library = { id = "com.android.library", version.ref = "android-gradle-vers" }
+android-app = { id = "com.android.application", version.ref = "android-gradle-vers" }

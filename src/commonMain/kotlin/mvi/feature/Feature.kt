@@ -4,7 +4,6 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 
-
 public abstract class Feature<WISH : Feature.Wish, STATE : Feature.State, NEWS : Feature.News>(
     initial: STATE,
     private val actor: Actor<WISH, STATE>,
