@@ -1,27 +1,26 @@
+@Suppress("UnstableApiUsage", "DSL_SCOPE_VIOLATION")
 plugins {
-    kotlin("multiplatform") version "1.5.31"
+    alias(libs.plugins.kotlin.multiplatform)
     id("convention.publication")
 }
 
 group = "io.github.voitenkodev"
-version = "1.0"
+version = "1.0.1"
 
-repositories {
-    mavenCentral()
-}
+repositories { mavenCentral() }
 
 kotlin {
 
     explicitApi()
 
     jvm {
-        compilations.all { kotlinOptions.jvmTarget = "11" }
+        compilations.all { kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString() }
         withJava()
         testRuns["test"].executionTask.configure { useJUnitPlatform() }
     }
-    js(BOTH) {
-        browser { commonWebpackConfig { cssSupport.enabled = true } }
-    }
+
+    js(BOTH) { browser { commonWebpackConfig { cssSupport.enabled = true } } }
+
     val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")
     val nativeTarget = when {
@@ -32,11 +31,7 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
-            }
-        }
+        val commonMain by getting { dependencies { implementation(libs.kotlinx.coroutines) } }
         val commonTest by getting
         val jvmMain by getting
         val jvmTest by getting
