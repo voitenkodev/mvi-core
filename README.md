@@ -1,7 +1,5 @@
 **Mvi-core**
 
-[![version]]
-
 ### How to start
 
 Need to add dependency to gradle ->
