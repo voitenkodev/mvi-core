@@ -1,11 +1,11 @@
 package mvi.core
 
-import mvi.feature.Feature
-import mvi.featureProcessor.FeatureProcessor
-import mvi.featureProcessor.FeatureProcessorImpl
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import mvi.feature.Feature
+import mvi.featureProcessor.FeatureProcessor
+import mvi.featureProcessor.FeatureProcessorImpl
 
 @Suppress("UNCHECKED_CAST")
 @OptIn(FlowPreview::class)
