@@ -8,6 +8,7 @@ import mvi.core.MviCoreImpl
 import mvi.core.SharingMap
 import mvi.feature.Feature
 
+@Suppress("UNCHECKED_CAST")
 @OptIn(FlowPreview::class)
 internal data class FeatureProcessorImpl<ROOT>(private val root: ROOT) : FeatureProcessor<ROOT> {
     private val features: FeatureMap = hashMapOf()
@@ -16,9 +17,9 @@ internal data class FeatureProcessorImpl<ROOT>(private val root: ROOT) : Feature
     override fun launchIn(scope: CoroutineScope): MviCoreImpl<ROOT> =
         MviCoreImpl(root, scope, features, pushing)
 
-    override fun <WISH : Feature.Wish, STATE : Feature.State, NEWS : Feature.News> feature(
+    override fun <ASYNC : Feature.Wish.Async, SYNC : Feature.Wish.Sync, STATE : Feature.State, NEWS : Feature.News> feature(
         tag: MviCore.FeatureTag,
-        feature: (ROOT) -> Feature<WISH, STATE, NEWS>,
+        feature: (ROOT) -> Feature<ASYNC, SYNC, STATE, NEWS>,
         updateRoot: ROOT.(STATE) -> ROOT
     ): FeatureProcessor<ROOT> {
         features[tag] = feature.invoke(root)

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.voitenkodev"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories { mavenCentral() }
 
@@ -31,6 +31,10 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings.optIn("kotlin.RequiresOptIn")
+        }
+
         val commonMain by getting { dependencies { implementation(libs.kotlinx.coroutines) } }
         val commonTest by getting
         val jvmMain by getting

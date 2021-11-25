@@ -7,9 +7,9 @@ import mvi.feature.Feature
 
 public interface FeatureProcessor<ROOT> {
 
-    public fun <WISH : Feature.Wish, STATE : Feature.State, NEWS : Feature.News> feature(
+    public fun <ASYNC : Feature.Wish.Async, SYNC : Feature.Wish.Sync, STATE : Feature.State, NEWS : Feature.News> feature(
         tag: MviCore.FeatureTag,
-        feature: (ROOT) -> Feature<WISH, STATE, NEWS>,
+        feature: (ROOT) -> Feature<ASYNC, SYNC, STATE, NEWS>,
         updateRoot: ROOT.(STATE) -> ROOT
     ): FeatureProcessor<ROOT>
 

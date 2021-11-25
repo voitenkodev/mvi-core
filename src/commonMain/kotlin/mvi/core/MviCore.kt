@@ -1,19 +1,18 @@
 package mvi.core
 
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import mvi.feature.Feature
 import mvi.featureProcessor.FeatureProcessor
 import mvi.featureProcessor.FeatureProcessorImpl
 
-@Suppress("UNCHECKED_CAST")
-@OptIn(FlowPreview::class)
 public interface MviCore<ROOT> {
 
     public val state: StateFlow<ROOT>
 
-    public fun <WISH : Feature.Wish> want(tag: FeatureTag, wish: WISH)
+    public fun <SYNC : Feature.Wish.Sync> want(tag: FeatureTag, sync: SYNC)
+
+    public fun <ASYNC : Feature.Wish.Async> want(tag: FeatureTag, async: ASYNC)
 
     public fun <NEWS : Feature.News> news(tag: FeatureTag): Flow<NEWS>?
 

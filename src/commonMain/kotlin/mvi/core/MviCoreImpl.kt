@@ -24,12 +24,16 @@ public class MviCoreImpl<ROOT> internal constructor(
         scope.launchFeatures()
     }
 
-    override fun <WISH : Feature.Wish> want(tag: MviCore.FeatureTag, wish: WISH) {
-        (features[tag] as? Feature<WISH, *, *>)?.want(wish)?.launchIn(scope)
+    override fun <ASYNC : Feature.Wish.Async> want(tag: MviCore.FeatureTag, async: ASYNC) {
+        (features[tag] as? Feature<ASYNC, *, *, *>)?.want(async)?.launchIn(scope)
+    }
+
+    override fun <SYNC : Feature.Wish.Sync> want(tag: MviCore.FeatureTag, sync: SYNC) {
+        (features[tag] as? Feature<*, SYNC, *, *>)?.want(sync)?.launchIn(scope)
     }
 
     override fun <NEWS : Feature.News> news(tag: MviCore.FeatureTag): Flow<NEWS>? {
-        return (features[tag] as? Feature<*, *, NEWS>)?.news
+        return (features[tag] as? Feature<*, *, *, NEWS>)?.news
     }
 
     public override fun <STATE : Feature.State> postProcessing(
@@ -54,6 +58,6 @@ public class MviCoreImpl<ROOT> internal constructor(
 }
 
 @FlowPreview
-internal typealias FeatureMap = HashMap<MviCore.FeatureTag, Feature<*, *, *>>
+internal typealias FeatureMap = HashMap<MviCore.FeatureTag, Feature<*, *, *, *>>
 internal typealias ObtainMap<ROOT> = HashMap<MviCore.FeatureTag, MviCoreImpl<ROOT>.(Feature.State) -> Unit>
 internal typealias SharingMap<ROOT> = HashMap<MviCore.FeatureTag, (ROOT, Feature.State) -> ROOT>
