@@ -1,14 +1,5 @@
 **Mvi-core**
 
-A architecture helper to create MVI pattern in project.
-
-### How to start
-
-Need to add dependency to gradle ->
-
-
-
-
 An image loading library for Android backed by Kotlin Coroutines. Coil is:
 
 - **Fast**: Nothing odd.
@@ -25,3 +16,11 @@ implementation("io.github.voitenkodev:mvi-core:1.0.2")
 
 ## Quick Start
 To Create architecture using this library - lets investigate what we have:
+
+# Wish
+Every screen of application we can split to:
+- **Async**: Any Request in Networking or Local Storage
+- **Sync**: Any changes in UI wish is working synchronize.
+- **Side**: Any singe event from screen (f.ex. show Toast, navigation, etc.)
+
+
