@@ -1,6 +1,6 @@
 # **Mvi-core**
 
-An image loading library for Android backed by Kotlin Coroutines. Coil is:
+A helper to create MVI architecture pattern in project:
 
 - **Fast**: Nothing odd.
 - **Modern**: Mvi-core uses kotlin Flow and coroutines.
@@ -15,12 +15,17 @@ implementation("io.github.voitenkodev:mvi-core:1.0.2")
 ```
 
 # Quick Start
-To Create architecture using this library - lets investigate what we have:
+To Create architecture using this library - let's investigate what we have:
 
 ## Wish
-Every screen of application we can split to:
+Every screen events of application we can split to:
 - **Async**: Any Request in Networking or Local Storage
 - **Sync**: Any changes in UI wish is working synchronize.
 - **Side**: Any singe event from screen (f.ex. show Toast, navigation, etc.)
 
+## State
+Data class is like a projection of UI screen (or part of screen) in current moment.
+
+## Feature<Async, Sync, Side, State>
+Component which corrects current State of screen (or part of screen) regarding new Wish (Async, or Sync, or Side)
 
