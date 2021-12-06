@@ -1,47 +1,69 @@
 package mvi.feature
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import mvi.IncorrectFeatureByTag
 import mvi.MissingActorException
 
-public typealias Actor<Async, State, Effect> = (async: Async, state: State) -> Flow<Effect>
+public typealias AsyncReducer<Async, State, Sync> = (wish: Async, state: State) -> Flow<Sync>
+public typealias SyncReducer<Sync, State> = (wish: Sync, state: State) -> State
+public typealias AffectConventions<State> = (wish: Feature.Wish, state: State) -> Flow<Feature.Wish>
 
-public typealias Reducer<Sync, State> = (sync: Sync, state: State) -> State
-
-public typealias NewsPublisher<Sync, State, News> = (sync: Sync, state: State) -> News?
-
-public abstract class Feature<ASYNC : Feature.Wish.Async, SYNC : Feature.Wish.Sync, STATE : Feature.State, NEWS : Feature.News>(
-    initial: STATE,
-    private val actor: Actor<ASYNC, STATE, SYNC>? = null,
-    private val reducer: Reducer<SYNC, STATE>,
-    private val newsPublisher: (NewsPublisher<SYNC, STATE, NEWS>)? = null,
+@OptIn(FlowPreview::class)
+public abstract class Feature<Async : Feature.Wish.Async, Sync : Feature.Wish.Sync, Side : Feature.Wish.Side, State : Feature.State>(
+    initial: State,
+    private val asyncReducer: AsyncReducer<Async, State, Sync>? = null,
+    private val syncReducer: SyncReducer<Sync, State>,
+    private val affectConventions: (AffectConventions<State>)? = null,
 ) {
-    private val _news: Channel<NEWS> = Channel(Channel.BUFFERED)
-    public val news: Flow<NEWS> = _news.receiveAsFlow()
 
-    private val _state: MutableStateFlow<STATE> = MutableStateFlow(initial)
-    public val state: StateFlow<STATE> get() = _state
+    private val _side: Channel<Side> = Channel(Channel.BUFFERED)
+    public val side: Flow<Side> = _side.receiveAsFlow()
+
+    private val _state = MutableStateFlow(initial)
+    public val state: StateFlow<State> get() = _state.asStateFlow()
+
+    public interface State
 
     public interface Wish {
         public interface Async : Wish
         public interface Sync : Wish
+        public interface Side : Wish
     }
 
-    public interface State
+    public fun want(wish: Async, scope: CoroutineScope): Job = flowOf(wish)
+        .affectConvention(wish, scope)
+        .flatMapConcat { asyncReducer?.invoke(it, _state.value) ?: throw MissingActorException }
+        .onEach { want(it, scope) }
+        .launchIn(scope)
 
-    public interface News
+    public fun want(wish: Sync, scope: CoroutineScope): Job = flowOf(wish)
+        .affectConvention(wish, scope)
+        .map { syncReducer.invoke(it, _state.value) }
+        .distinctUntilChanged()
+        .onEach { _state.emit(it) }
+        .catch { throw IncorrectFeatureByTag }
+        .launchIn(scope)
+
+    public fun want(wish: Side, scope: CoroutineScope): Job = flowOf(wish)
+        .affectConvention(wish, scope)
+        .map { _side.send(wish) }
+        .launchIn(scope)
+
+    private fun <T> Flow<T>.affectConvention(wish: Wish, scope: CoroutineScope): Flow<T> = onEach {
+        affectConventions?.invoke(wish, _state.value)
+            ?.onEach { distributeAffect(it, scope) }
+            ?.launchIn(scope)
+    }
 
     @FlowPreview
-    public fun want(wish: ASYNC): Flow<STATE> = flowOf(wish).flatMapConcat {
-        actor?.invoke(it, _state.value) ?: throw MissingActorException
-    }.flatMapConcat { want(it) }
-
-    public fun want(wish: SYNC): Flow<STATE> = flowOf(wish)
-        .onEach { newsPublisher?.invoke(it, _state.value)?.let { _news.send(it) } }
-        .map { reducer.invoke(it, _state.value) }
-        .onEach { _state.emit(it) }
-        .distinctUntilChanged()
-        .catch { throw IncorrectFeatureByTag }
+    @Suppress("UNCHECKED_CAST")
+    private fun distributeAffect(w: Wish, scope: CoroutineScope) =
+        (w as? Sync)?.let { want(it, scope) }
+            ?: (w as? Async)?.let { want(it, scope) }
+            ?: (w as? Side)?.let { want(it, scope) }
+            ?: flowOf(Unit)
 }

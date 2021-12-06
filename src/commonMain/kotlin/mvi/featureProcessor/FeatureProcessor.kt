@@ -5,13 +5,13 @@ import mvi.core.MviCore
 import mvi.core.MviCoreImpl
 import mvi.feature.Feature
 
-public interface FeatureProcessor<ROOT> {
+public interface FeatureProcessor<Root> {
 
-    public fun <ASYNC : Feature.Wish.Async, SYNC : Feature.Wish.Sync, STATE : Feature.State, NEWS : Feature.News> feature(
+    public fun <Async : Feature.Wish.Async, Sync : Feature.Wish.Sync, Side : Feature.Wish.Side, State : Feature.State> feature(
         tag: MviCore.FeatureTag,
-        feature: (ROOT) -> Feature<ASYNC, SYNC, STATE, NEWS>,
-        updateRoot: ROOT.(STATE) -> ROOT
-    ): FeatureProcessor<ROOT>
+        feature: (Root) -> Feature<Async, Sync, Side, State>,
+        updateRoot: Root.(State) -> Root
+    ): FeatureProcessor<Root>
 
-    public fun launchIn(scope: CoroutineScope): MviCoreImpl<ROOT>
+    public fun launchIn(scope: CoroutineScope): MviCoreImpl<Root>
 }

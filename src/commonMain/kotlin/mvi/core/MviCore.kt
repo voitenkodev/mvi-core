@@ -6,24 +6,26 @@ import mvi.feature.Feature
 import mvi.featureProcessor.FeatureProcessor
 import mvi.featureProcessor.FeatureProcessorImpl
 
-public interface MviCore<ROOT> {
+public interface MviCore<Root> {
 
-    public val state: StateFlow<ROOT>
+    public interface FeatureTag
 
-    public fun <SYNC : Feature.Wish.Sync> want(tag: FeatureTag, sync: SYNC)
+    public val state: StateFlow<Root>
 
-    public fun <ASYNC : Feature.Wish.Async> want(tag: FeatureTag, async: ASYNC)
+    public fun <Sync : Feature.Wish.Sync> want(tag: FeatureTag, wish: Sync)
 
-    public fun <NEWS : Feature.News> news(tag: FeatureTag): Flow<NEWS>?
+    public fun <Async : Feature.Wish.Async> want(tag: FeatureTag, wish: Async)
 
-    public fun <STATE : Feature.State> postProcessing(
-        tag: FeatureTag, automatically: MviCoreImpl<ROOT>.(STATE) -> Unit
-    ): MviCoreImpl<ROOT>
+    public fun <Side : Feature.Wish.Side> want(tag: FeatureTag, wish: Side)
+
+    public fun <Side : Feature.Wish.Side> side(tag: FeatureTag): Flow<Side>?
+
+    public fun <State : Feature.State> postProcessing(
+        tag: FeatureTag, automatically: MviCoreImpl<Root>.(State) -> Unit
+    ): MviCoreImpl<Root>
 
     public companion object {
         public fun <ROOT> featureProcessor(root: ROOT): FeatureProcessor<ROOT> =
             FeatureProcessorImpl(root)
     }
-
-    public interface FeatureTag
 }

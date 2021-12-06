@@ -1,7 +1,6 @@
 package mvi.featureProcessor
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.FlowPreview
 import mvi.core.FeatureMap
 import mvi.core.MviCore
 import mvi.core.MviCoreImpl
@@ -9,21 +8,20 @@ import mvi.core.SharingMap
 import mvi.feature.Feature
 
 @Suppress("UNCHECKED_CAST")
-@OptIn(FlowPreview::class)
-internal data class FeatureProcessorImpl<ROOT>(private val root: ROOT) : FeatureProcessor<ROOT> {
+internal data class FeatureProcessorImpl<Root>(private val root: Root) : FeatureProcessor<Root> {
     private val features: FeatureMap = hashMapOf()
-    private val pushing: SharingMap<ROOT> = hashMapOf()
+    private val pushing: SharingMap<Root> = hashMapOf()
 
-    override fun launchIn(scope: CoroutineScope): MviCoreImpl<ROOT> =
+    override fun launchIn(scope: CoroutineScope): MviCoreImpl<Root> =
         MviCoreImpl(root, scope, features, pushing)
 
-    override fun <ASYNC : Feature.Wish.Async, SYNC : Feature.Wish.Sync, STATE : Feature.State, NEWS : Feature.News> feature(
+    override fun <Async : Feature.Wish.Async, Sync : Feature.Wish.Sync, Side : Feature.Wish.Side, State : Feature.State> feature(
         tag: MviCore.FeatureTag,
-        feature: (ROOT) -> Feature<ASYNC, SYNC, STATE, NEWS>,
-        updateRoot: ROOT.(STATE) -> ROOT
-    ): FeatureProcessor<ROOT> {
+        feature: (Root) -> Feature<Async, Sync, Side, State>,
+        updateRoot: Root.(State) -> Root
+    ): FeatureProcessor<Root> {
         features[tag] = feature.invoke(root)
-        (updateRoot as? ROOT.(Feature.State) -> ROOT)?.let { this.pushing[tag] = it }
+        (updateRoot as? Root.(Feature.State) -> Root)?.let { this.pushing[tag] = it }
         return this
     }
 }

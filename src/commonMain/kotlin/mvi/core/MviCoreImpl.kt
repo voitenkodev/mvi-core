@@ -9,41 +9,43 @@ import mvi.featureProcessor.FeatureProcessorImpl
 
 @Suppress("UNCHECKED_CAST")
 @OptIn(FlowPreview::class)
-public class MviCoreImpl<ROOT> internal constructor(
-    root: ROOT,
+public class MviCoreImpl<Root> internal constructor(
+    root: Root,
     private val scope: CoroutineScope,
     private val features: FeatureMap = hashMapOf(),
-    private val onUpdate: SharingMap<ROOT> = hashMapOf(),
-    private val automaticallyMap: ObtainMap<ROOT> = hashMapOf()
-) : MviCore<ROOT> {
+    private val onUpdate: SharingMap<Root> = hashMapOf(),
+    private val automaticallyMap: ObtainMap<Root> = hashMapOf()
+) : MviCore<Root> {
 
     private val _state = MutableStateFlow(root)
-    public override val state: StateFlow<ROOT> get() = _state.asStateFlow()
+    public override val state: StateFlow<Root> get() = _state.asStateFlow()
 
     init {
         scope.launchFeatures()
     }
 
-    override fun <ASYNC : Feature.Wish.Async> want(tag: MviCore.FeatureTag, async: ASYNC) {
-        (features[tag] as? Feature<ASYNC, *, *, *>)?.want(async)?.launchIn(scope)
+    override fun <Async : Feature.Wish.Async> want(tag: MviCore.FeatureTag, wish: Async) {
+        (features[tag] as? Feature<Async, *, *, *>)?.want(wish, scope)
     }
 
-    override fun <SYNC : Feature.Wish.Sync> want(tag: MviCore.FeatureTag, sync: SYNC) {
-        (features[tag] as? Feature<*, SYNC, *, *>)?.want(sync)?.launchIn(scope)
+    override fun <Sync : Feature.Wish.Sync> want(tag: MviCore.FeatureTag, wish: Sync) {
+        (features[tag] as? Feature<*, Sync, *, *>)?.want(wish, scope)
     }
 
-    override fun <NEWS : Feature.News> news(tag: MviCore.FeatureTag): Flow<NEWS>? {
-        return (features[tag] as? Feature<*, *, *, NEWS>)?.news
+    override fun <Side : Feature.Wish.Side> want(tag: MviCore.FeatureTag, wish: Side) {
+        (features[tag] as? Feature<*, *, Side, *>)?.want(wish, scope)
     }
+
+    override fun <Side : Feature.Wish.Side> side(tag: MviCore.FeatureTag): Flow<Side>? =
+        (features[tag] as? Feature<*, *, Side, *>)?.side
 
     public override fun <STATE : Feature.State> postProcessing(
-        tag: MviCore.FeatureTag, automatically: MviCoreImpl<ROOT>.(STATE) -> Unit
-    ): MviCoreImpl<ROOT> = apply {
-        (automatically as? MviCoreImpl<ROOT>.(Feature.State) -> Unit)
+        tag: MviCore.FeatureTag, automatically: MviCoreImpl<Root>.(STATE) -> Unit
+    ): MviCoreImpl<Root> = apply {
+        (automatically as? MviCoreImpl<Root>.(Feature.State) -> Unit)
             ?.let { this.automaticallyMap[tag] = it }
     }
 
-    @FlowPreview
     private fun CoroutineScope.launchFeatures() = features.onEach { item ->
         item.value.state.onEach {
             automaticallyMap[item.key]?.invoke(this@MviCoreImpl, it)
@@ -57,7 +59,7 @@ public class MviCoreImpl<ROOT> internal constructor(
     }
 }
 
-@FlowPreview
+@OptIn(FlowPreview::class)
 internal typealias FeatureMap = HashMap<MviCore.FeatureTag, Feature<*, *, *, *>>
 internal typealias ObtainMap<ROOT> = HashMap<MviCore.FeatureTag, MviCoreImpl<ROOT>.(Feature.State) -> Unit>
 internal typealias SharingMap<ROOT> = HashMap<MviCore.FeatureTag, (ROOT, Feature.State) -> ROOT>
