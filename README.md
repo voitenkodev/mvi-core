@@ -17,6 +17,9 @@ implementation("io.github.voitenkodev:mvi-core:1.0.2")
 # Quick Start
 To Create architecture using this library - let's investigate what we have:
 
+## Feature<Async, Sync, Side, State>
+Component which corrects current `State` of screen (or part of screen) regarding new Wish (`Async`, or `Sync`, or `Side`)
+
 ### Wish
 Every screen events of application we can split to:
 - `Async`: Any Request in Networking or Local Storage
@@ -25,8 +28,5 @@ Every screen events of application we can split to:
 
 ### State
 Data class is like a projection of UI screen (or part of screen) in current moment.
-
-## Feature<Async, Sync, Side, State>
-Component which corrects current `State` of screen (or part of screen) regarding new Wish (`Async`, or `Sync`, or `Side`)
 
 ## Example of Feature
