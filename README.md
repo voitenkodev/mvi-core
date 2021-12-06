@@ -19,14 +19,12 @@ To Create architecture using this library - let's investigate what we have:
 
 ## Feature<Async, Sync, Side, State>
 Component which corrects current `State` of screen (or part of screen) regarding new Wish (`Async`, or `Sync`, or `Side`)
-
-### Wish
+### Wish:
 Every screen events of application we can split to:
 - `Async`: Any Request in Networking or Local Storage
 - `Sync` Any changes in UI wish is working synchronize.
 - `Side` Any singe event from screen (f.ex. show Toast, navigation, etc.)
-
-### State
+### State:
 Data class is like a projection of UI screen (or part of screen) in current moment.
 
 ## Example of Feature
