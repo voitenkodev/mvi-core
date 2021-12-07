@@ -37,4 +37,4 @@ Data class is like a projection of UI screen (or part of screen) in current mome
 ### feature expand structure:
 [<img src="screenshots/feature-structure.jpg" width="321" height = "384" />](screenshots/feature-structure.jpg)
 
-[![Watch the video](screenshots/input-feature.mp4)](screenshots/input-feature.mp4)
+[<video src="screenshots/input-feature.mp4" width="321" height = "384" />](screenshots/input-feature.mp4)
