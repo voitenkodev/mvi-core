@@ -1,10 +1,5 @@
 # Feature
 
-## Sipmle option:
-
-### This is api of simple `Feature`.
-[feature-simple-structure](https://user-images.githubusercontent.com/93656470/145011641-b20a5a06-14d4-41f7-a1bf-d4a51100abc3.jpg)
-
 ### Example of "Input Field" Feature.
 https://user-images.githubusercontent.com/93656470/145011161-73e31c50-4879-4c41-99e0-f8ddf43bd613.mp4
 
