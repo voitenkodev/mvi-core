@@ -18,6 +18,12 @@ Expand State:
 1) Input Field
 2) Error Field (Red text) 
 
+And:
+- We dont have any async events
+- We dont have any single events
+
+Lets put type of `Async` and `Side` wish's like `Nothing`
+
 ```kotlin
 class ExampleInputFeature(
     initial: State = State()
