@@ -73,9 +73,9 @@ class SyncReducerImpl : SyncReducer<Sync, State> {
 ```
 
 For to finish this Feature, need to merge all blocks in one Class.
- - Class needs to extend from `Feature<Nothing, ExampleInputFeature.Sync, Nothing, ExampleInputFeature.State>`.
+ - Class needs to extend from `Feature<Nothing, Sync, Nothing, State>`.
  - As parameter in constructor: `InitialState` + `SyncReducer`.
- - 
+ 
 ```kotlin
 class ExampleInputFeature(
     initial: State = State()
