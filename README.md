@@ -35,6 +35,9 @@ Data class is like a projection of UI screen (or part of screen) in current mome
 ### feature simple structure:
 [<img src="screenshots/feature-simple-structure.jpg" width="321" height = "384" />](screenshots/feature-simple-structure.jpg)
 ### feature expand structure:
+
+https://user-images.githubusercontent.com/93656470/145011161-73e31c50-4879-4c41-99e0-f8ddf43bd613.mp4
+
+
 [<img src="screenshots/feature-structure.jpg" width="321" height = "384" />](screenshots/feature-structure.jpg)
 
-<video src='screenshots/input-feature.mp4' width=180/>
