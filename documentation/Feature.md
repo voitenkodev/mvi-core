@@ -16,9 +16,37 @@ Collapse state:
 
 Expand State:
 1) Input Field
-2) Error Field (Red text) 
+2) Error Field (Red text)
+3) Placeholder in input type
 
-And:
+The `State` of this view should be like this one: 
+```kotlin
+ data class State(
+        val expander: Expander = Expander(),
+        val input: Input = Input(),
+        val error: Error = Error()
+    ) : Feature.State {
+
+        data class Error(
+            val text: String = "",
+            val isShowed: Boolean = false
+        )
+
+        data class Input(
+            val placeholder: String = "",
+            val text: String = "",
+        )
+
+        data class Expander(
+            val isOpened: Boolean = false,
+            val number: String = "",
+            val notes: String = "",
+            val expandHeight: Int? = null,
+        )
+    }
+```
+
+And also:
 - We dont have any async events
 - We dont have any single events
 
