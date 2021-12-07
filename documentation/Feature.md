@@ -9,7 +9,7 @@
 https://user-images.githubusercontent.com/93656470/145011161-73e31c50-4879-4c41-99e0-f8ddf43bd613.mp4
 
 
-###After looking a video we can to see:
+### After looking a video we can to see:
 Collapse state: 
 1) Number
 2) Notion Field (in collapse state)
