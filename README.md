@@ -11,7 +11,7 @@ A helper to create MVI architecture pattern in project:
 Mvi-core is available on `mavenCentral()`.
 
 ```kotlin
-implementation("io.github.voitenkodev:mvi-core:1.0.2")
+implementation("io.github.voitenkodev:mvi-core:1.0.4-alpha")
 ```
 
 # Quick Start
@@ -31,3 +31,5 @@ Every screen events of application we can split to:
 Data class is like a projection of UI screen (or part of screen) in current moment.
 
 ## Example of Feature
+
+[<img src="screenshots/feature-simple-structure.jpg" width="250" height = "551" />](screenshots/android-screen-favorite.png)
