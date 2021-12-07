@@ -49,9 +49,33 @@ The `State` of this view should be like this one:
 And also:
 - We dont have any async events
 - We dont have any single events
+We need just to add sync events for this view. It looks like:
+```kotlin
+sealed class Sync : Wish.Sync {
+        object Expand : Sync()
+        object Collapse : Sync()
+        data class SetText(val text: String) : Sync()
+        object ShowError : Sync()
+        object HideError : Sync()
+    }
+```
 
 Lets put type of `Async` and `Side` wish's like `Nothing`
 
+It remains to add parser for `Sync` wish's to new `State`, it has name `SyncReducer`.
+```kotlin
+class SyncReducerImpl : SyncReducer<Sync, State> {
+        override fun invoke(wish: Sync, state: State) = when (wish) {
+            is Sync.SetText -> state.copy(input = state.input.copy(text = wish.text))
+            is Sync.Collapse -> state.copy(expander = state.expander.copy(isOpened = false))
+            is Sync.Expand -> state.copy(expander = state.expander.copy(isOpened = true))
+            is Sync.HideError -> state.copy(error = state.error.copy(isShowed = false))
+            is Sync.ShowError -> state.copy(error = state.error.copy(isShowed = true))
+        }
+    }
+```
+
+For to finish this Feature, need to merge all blocks in one class.
 ```kotlin
 class ExampleInputFeature(
     initial: State = State()
