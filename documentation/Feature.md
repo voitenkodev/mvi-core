@@ -15,8 +15,8 @@ Collapse state:
 2) Notion Field (in collapse state)
 
 Expand State:
-3) Input Field
-4) Error Field (Red text)
+1) Input Field
+2) Error Field (Red text) 
 
 ```kotlin
 class ExampleInputFeature(
@@ -70,11 +70,3 @@ class ExampleInputFeature(
 }
 
 ```
-
-### feature simple structure:
-[<img src="screenshots/feature-simple-structure.jpg" width="321" height = "384" />](screenshots/feature-simple-structure.jpg)
-### feature expand structure:
-
-
-[<img src="screenshots/feature-structure.jpg" width="321" height = "384" />](screenshots/feature-structure.jpg)
-
