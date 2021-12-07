@@ -11,13 +11,13 @@ https://user-images.githubusercontent.com/93656470/145011161-73e31c50-4879-4c41-
 
 ### After looking a video we can to see:
 Collapse state: 
-1) Number
-2) Notion Field (in collapse state)
+1) Number "1"
+2) Notion Field (in collapse state) "You need to put title of event"
 
 Expand State:
 1) Input Field
-2) Error Field (Red text)
-3) Placeholder in input type
+2) Error Field "ops, u forgot to put title"
+3) Placeholder "Title..."
 
 The `State` of this view should be like this one: 
 ```kotlin
@@ -47,8 +47,9 @@ The `State` of this view should be like this one:
 ```
 
 And also:
-- We dont have any async events
-- We dont have any single events
+- We dont have any async events.
+- We dont have any single events.
+
 We need just to add sync events for this view. It looks like:
 ```kotlin
 sealed class Sync : Wish.Sync {
