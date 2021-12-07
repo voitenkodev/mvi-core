@@ -50,6 +50,8 @@ And also:
 - We dont have any async events.
 - We dont have any single events.
 
+Lets put type of `Async` and `Side` wish's like `Nothing`.
+
 We need just to add sync events for this view. It looks like:
 ```kotlin
 sealed class Sync : Wish.Sync {
@@ -61,9 +63,8 @@ sealed class Sync : Wish.Sync {
     }
 ```
 
-Lets put type of `Async` and `Side` wish's like `Nothing`
-
 It remains to add parser for `Sync` wish's to new `State`, it has name `SyncReducer`.
+
 ```kotlin
 class SyncReducerImpl : SyncReducer<Sync, State> {
         override fun invoke(wish: Sync, state: State) = when (wish) {
