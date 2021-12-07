@@ -11,7 +11,7 @@ A helper to create MVI architecture pattern in project:
 Mvi-core is available on `mavenCentral()`.
 
 ```kotlin
-implementation("io.github.voitenkodev:mvi-core:1.0.4-alpha")
+implementation("io.github.voitenkodev:mvi-core:1.0.4")
 ```
 
 # Quick Start
@@ -36,3 +36,5 @@ Data class is like a projection of UI screen (or part of screen) in current mome
 [<img src="screenshots/feature-simple-structure.jpg" width="321" height = "384" />](screenshots/feature-simple-structure.jpg)
 ### feature expand structure:
 [<img src="screenshots/feature-structure.jpg" width="321" height = "384" />](screenshots/feature-structure.jpg)
+
+[![Watch the video](screenshots/input-feature.mp4)](screenshots/input-feature.mp4)
