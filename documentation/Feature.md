@@ -138,7 +138,7 @@ class ExampleInputFeature(
 
 ## An additional items of Feature.
 
-If we need to call something async. We need:
+### If we need to call something async. We need:
 
 - add Wish `Async`.
 - add `AsyncReducer<Async, State, Sync>`, which maps async events to sync.
@@ -148,6 +148,8 @@ sealed class Async : Wish.Async {
     object CallSomethingAsync : Async()
 }
 ```
+
+- It needs to add in constructor of `Feature`. (`asyncReducer = AsyncReducerImpl()`)
 
 ```kotlin
 class AsyncReducerImpl : AsyncReducer<Async, State, Sync> {
@@ -167,3 +169,30 @@ class AsyncReducerImpl : AsyncReducer<Async, State, Sync> {
     }
 }
 ```
+
+After that to add it in current `Feature`.
+
+### If we have some wish's which could trigger an another wish's. Let's use `AffectConventions<State>`.
+
+For example: We need to show toast message every success status from request.
+
+Firstly let's add `Side` (Single) wish.
+
+```kotlin
+sealed class Side : Wish.Side {
+    object ShowToast : Side()
+}
+```
+
+After that we can use it in `AffectConventions`. Some like this one:
+ - It needs to add in constructor of `Feature`. (`affectConventions = AffectConventionsImpl()`)
+```kotlin
+class AffectConventionsImpl : AffectConventions<State> {
+    override fun invoke(sync: Wish, state: State): Flow<Wish> = flow {
+        if (sync is Async.CallSomethingAsync && state.color == Color.Green) {
+            emit(Side.ShowToast)
+        }
+    }
+}
+```
+
