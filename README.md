@@ -41,5 +41,9 @@ Every screen events of application we can split to:
 
 Data class is like a projection of UI screen (or part of screen) in current moment.
 
+### Side: 
+
+Chanel for listening side wish's.
+
 ![feature-example](https://user-images.githubusercontent.com/93656470/145410478-32b1f69d-78c6-4b22-bb33-df783d3f9b7e.jpg)
 
