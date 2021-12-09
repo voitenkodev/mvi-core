@@ -41,7 +41,7 @@ Every screen events of application we can split to:
 
 Data class is like a projection of UI screen (or part of screen) in current moment.
 
- - Variable `state` works by pattern observer, using Kotlin Flow.
+ - Variable `state` works wish a pattern observer, using Kotlin Flow.
 
 ### Side: 
 
