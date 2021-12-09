@@ -15,9 +15,13 @@ implementation("io.github.voitenkodev:mvi-core:1.0.4")
 ```
 
 # Quick Start
+
 To Create architecture using this library - let's investigate what we have:
+
 ## Feature<Async, Sync, Side, State>
+
 Component which corrects current `State` of screen (or part of screen) regarding new Wish (`Async`, or `Sync`, or `Side`)
+- [Example of Feature](documentation/Feature.md)
 
 ### Wish:
 
@@ -26,8 +30,10 @@ Every screen events of application we can split to:
 - `Sync` Any changes in UI wish is working synchronize.
 - `Side` Any singe event from screen (f.ex. show Toast, navigation, etc.)
 
+- `SyncReducer`: Synchronous parser for `Sync` wish's to new `State`.
+- `AsyncReducer`: Asynchronous parser for `Async` wish's to new `Sync` wish.
+- `AffectConventions`: Calling any `Wish`, trigger an another wish's according to the some condition.
+
 ### State:
 
 Data class is like a projection of UI screen (or part of screen) in current moment.
-
-## Example of Feature
