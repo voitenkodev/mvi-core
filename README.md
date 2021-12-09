@@ -1,3 +1,6 @@
+
+[![Support Platform](https://img.shields.io/static/v1?label=platforms&message=windows%20|%20macos%20|%20linux%20|%20android|%20ios%20&color=yellow&style=for-the-badge)]
+
 # **Mvi-core**
 
 A helper to create MVI architecture pattern in project:
