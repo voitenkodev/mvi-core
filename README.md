@@ -1,5 +1,6 @@
-![Support Platform](https://img.shields.io/static/v1?label=platforms&message=windows%20|%20macos%20|%20linux%20|%20android%20|%20ios%20&color=blue&?style=flat)
-![Maven Central](https://img.shields.io/static/v1?label=Maven Central&message=1.0.4&color=blue&?style=flat)
+![Support Platform](https://img.shields.io/static/v1?label=platforms&message=windows%20|%20macos%20|%20linux%20|%20android%20|%20ios%20&color=blue&?style=flat)()
+
+![Maven Central](https://img.shields.io/static/v1?label=Maven Central&message=1.0.4&color=blue&?style=flat)()
 
 # **Mvi-core**
 
