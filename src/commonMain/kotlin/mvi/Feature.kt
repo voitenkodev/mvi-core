@@ -1,12 +1,12 @@
-package mvi.feature
+package mvi
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import mvi.IncorrectFeatureByTag
-import mvi.MissingActorException
+import mvi.additional.IncorrectFeatureByTag
+import mvi.additional.MissingActorException
 
 public typealias AsyncReducer<Async, State, Sync> = (wish: Async, state: State) -> Flow<Sync>
 public typealias SyncReducer<Sync, State> = (wish: Sync, state: State) -> State

@@ -3,22 +3,23 @@ package mvi.core
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
-import mvi.feature.Feature
-import mvi.featureProcessor.FeatureProcessor
-import mvi.featureProcessor.FeatureProcessorImpl
+import mvi.Feature
+import mvi.MviCore
+import mvi.additional.WantApi
 
 @Suppress("UNCHECKED_CAST")
 @OptIn(FlowPreview::class)
-public class MviCoreImpl<Root> internal constructor(
+internal class MviCoreImpl<Root> internal constructor(
     root: Root,
     private val scope: CoroutineScope,
     private val features: FeatureMap = hashMapOf(),
-    private val onUpdate: SharingMap<Root> = hashMapOf(),
-    private val automaticallyMap: ObtainMap<Root> = hashMapOf()
+    private val sharing: SharingMap<Root> = hashMapOf(),
+    private val affectFeature: AffectMap<Root> = hashMapOf(),
+    private var affect: Affect<Root>? = null
 ) : MviCore<Root> {
 
     private val _state = MutableStateFlow(root)
-    public override val state: StateFlow<Root> get() = _state.asStateFlow()
+    public override val root: StateFlow<Root> get() = _state.asStateFlow()
 
     init {
         scope.launchFeatures()
@@ -39,27 +40,28 @@ public class MviCoreImpl<Root> internal constructor(
     override fun <Side : Feature.Wish.Side> side(tag: MviCore.FeatureTag): Flow<Side>? =
         (features[tag] as? Feature<*, *, Side, *>)?.side
 
-    public override fun <STATE : Feature.State> postProcessing(
-        tag: MviCore.FeatureTag, automatically: MviCoreImpl<Root>.(STATE) -> Unit
+    public override fun <STATE : Feature.State> affect(
+        tag: MviCore.FeatureTag, lambda: WantApi<Root>.(STATE) -> Unit
     ): MviCoreImpl<Root> = apply {
-        (automatically as? MviCoreImpl<Root>.(Feature.State) -> Unit)
-            ?.let { this.automaticallyMap[tag] = it }
+        (lambda as? MviCoreImpl<Root>.(Feature.State) -> Unit)
+            ?.let { this.affectFeature[tag] = it }
+    }
+
+    override fun affect(lambda: WantApi<Root>.(root: Root) -> Unit): MviCore<Root> = apply {
+        affect = lambda
     }
 
     private fun CoroutineScope.launchFeatures() = features.onEach { item ->
         item.value.state.onEach {
-            automaticallyMap[item.key]?.invoke(this@MviCoreImpl, it)
-            onUpdate[item.key]?.invoke(state.value, it)?.let { _state.value = it }
+            affectFeature[item.key]?.invoke(this@MviCoreImpl, it)
+            sharing[item.key]?.invoke(root.value, it)?.let { _state.value = it }
+            affect?.invoke(this@MviCoreImpl, _state.value)
         }.launchIn(this)
-    }
-
-    public companion object {
-        public fun <ROOT> featureProcessor(root: ROOT): FeatureProcessor<ROOT> =
-            FeatureProcessorImpl(root)
     }
 }
 
 @OptIn(FlowPreview::class)
 internal typealias FeatureMap = HashMap<MviCore.FeatureTag, Feature<*, *, *, *>>
-internal typealias ObtainMap<ROOT> = HashMap<MviCore.FeatureTag, MviCoreImpl<ROOT>.(Feature.State) -> Unit>
 internal typealias SharingMap<ROOT> = HashMap<MviCore.FeatureTag, (ROOT, Feature.State) -> ROOT>
+internal typealias AffectMap<ROOT> = HashMap<MviCore.FeatureTag, MviCoreImpl<ROOT>.(Feature.State) -> Unit>
+internal typealias Affect<ROOT> = MviCoreImpl<ROOT>.(root: ROOT) -> Unit
