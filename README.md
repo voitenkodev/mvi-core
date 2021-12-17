@@ -14,7 +14,7 @@ A helper to create MVI architecture pattern in project:
 Mvi-core is available on `mavenCentral()`.
 
 ```kotlin
-implementation("io.github.voitenkodev:mvi-core:1.0.4")
+implementation("io.github.voitenkodev:mvi-core:1.0.6")
 ```
 
 # Quick Start
