@@ -49,3 +49,11 @@ Chanel for listening side wish's, using Kotlin Channel.
 
 ![feature-example](https://user-images.githubusercontent.com/93656470/145410478-32b1f69d-78c6-4b22-bb33-df783d3f9b7e.jpg)
 
+## MviCore<Root>
+ 
+ Component for combining `Feature`s and mapping it to State of whole screen.
+ - `FeatureTag`: Identficator for `Feature`.
+ - `Root`: State of whole screen.
+ 
+![Mvi-Core-Processor](https://user-images.githubusercontent.com/93656470/146517399-6ec9ad6a-648f-49a4-971c-3f6362de3593.jpg)
+
