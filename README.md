@@ -25,8 +25,10 @@ To Create architecture using this library - let's investigate what we have:
 
 Component which corrects current `State` of screen (or part of screen) regarding new Wish (`Async`, or `Sync`, or `Side`)
 
-### Example
+## Example
 - [Example of Feature](documentation/Feature.md)
+
+## Notes
 
 ### Wish:
 
@@ -53,10 +55,13 @@ Chanel for listening side wish's, using Kotlin Channel.
 
 ## MviCore<Root>
  
- ### Example
+ Component for combining `Feature`s and mapping it to State of whole screen.
+ 
+ ## Example
  - [Example of MviCore](documentation/MviCore.md)
  
- Component for combining `Feature`s and mapping it to State of whole screen.
+ ## Notes
+ 
  - `FeatureTag`: Identficator for `Feature`.
  - `Root`: State of whole screen.
  
