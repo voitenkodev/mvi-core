@@ -28,8 +28,6 @@ Component which corrects current `State` of screen (or part of screen) regarding
 ### Example
 - [Example of Feature](documentation/Feature.md)
 
-### Notes
-
 ### Wish:
 
 Every screen events of application we can split to:
@@ -60,7 +58,7 @@ Chanel for listening side wish's, using Kotlin Channel.
  ### Example
  - [Example of MviCore](documentation/MviCore.md)
  
- ### Notes
+ ### Components
  
  - `FeatureTag`: Identficator for `Feature`.
  - `Root`: State of whole screen.
