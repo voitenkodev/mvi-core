@@ -1,6 +1,8 @@
 [comment]: <> (TODO)
 
-Out model of whole screen looks like: 
+### Root
+
+Out model of whole screen looks like:
 
 ```kotlin
 data class NewEventState(
@@ -42,11 +44,27 @@ data class NewEventState(
         )
 ```
 
+### Feature's
 After splitting it by features we have two features:
+
 - `val title`
 - `val description`
 
-After combininig the fatures we will see:
+### TAG's
+
+The next step is TAG's, for to identify simular geatures.
+
+```kotlin 
+  enum class TAG : MviCore.FeatureTag {
+        TITLE, 
+        DESCRIPTION
+  }
+```
+
+###  MviCore
+
+After combininig the fatures, using Builder, we will see:
+
 ```kotlin
  override val processor = MviCore.Builder(root = NewEventState())
         .feature(
